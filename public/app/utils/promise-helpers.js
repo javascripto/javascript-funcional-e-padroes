@@ -17,3 +17,9 @@ export const timeoutPromise = (milliseconds, promise) => {
   });
   return Promise.race([promise, timeout]);
 };
+
+export const delay = (milliseconds) => (data) => {
+  return new Promise((resolve) =>
+    setTimeout(() => resolve(data), milliseconds)
+  );
+};

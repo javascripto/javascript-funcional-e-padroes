@@ -6,7 +6,7 @@ import {
   debounceTime,
 } from './utils/operators.js';
 import './utils/array-helpers.js';
-import { timeoutPromise } from './utils/promise-helpers.js';
+import { delay, timeoutPromise } from './utils/promise-helpers.js';
 import { notasService as service } from './nota/service.js';
 
 const operations = compose(
@@ -16,6 +16,7 @@ const operations = compose(
 
 const action2 = operations(() =>
   timeoutPromise(200, service.sumItems('2143'))
+    .then(delay(1000))
     .then((total) => ({ total }))
     .then(console.log)
     .catch(console.log)
