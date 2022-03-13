@@ -23,3 +23,14 @@ export const delay = (milliseconds) => (data) => {
     setTimeout(() => resolve(data), milliseconds)
   );
 };
+
+export const retry = (times, retryInterval, promiseInvoker) => {
+  return promiseInvoker().catch((error) => {
+    if (times > 0) {
+      return delay(retryInterval)().then(() =>
+        retry(times - 1, retryInterval, promiseInvoker)
+      );
+    }
+    return Promise.reject(error);
+  });
+};
