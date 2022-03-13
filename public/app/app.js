@@ -1,17 +1,24 @@
 // @ts-check
-import { takeUntil, debounceTime } from './utils/operators.js';
-import { notasService as service } from './nota/service.js';
+import {
+  compose,
+  takeUntil,
+  partialize,
+  debounceTime,
+} from './utils/operators.js';
 import './utils/array-helpers.js';
+import { notasService as service } from './nota/service.js';
 
-const action = debounceTime(
-  500,
-  takeUntil(3, () =>
-    service
-      .sumItems('2143')
-      .then((total) => ({ total }))
-      .then(console.log)
-      .catch(console.log)
-  )
+const operations = compose(
+  partialize(debounceTime, 500),
+  partialize(takeUntil, 3)
 );
 
-document.querySelector('#myButton').onclick = action;
+const action2 = operations(() =>
+  service
+    .sumItems('2143')
+    .then((total) => ({ total }))
+    .then(console.log)
+    .catch(console.log)
+);
+
+document.querySelector('#myButton').onclick = action2;
