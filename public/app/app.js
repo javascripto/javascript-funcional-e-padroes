@@ -1,10 +1,13 @@
+import { takeUntil } from './utils/operators.js';
 import { notasService as service } from './nota/service.js';
 import './utils/array-helpers.js';
 
-document.querySelector('#myButton').onclick = () => {
+const operation = takeUntil(3, () =>
   service
     .sumItems('2143')
     .then((total) => ({ total }))
     .then(console.log)
-    .catch(console.log);
-};
+    .catch(console.log)
+);
+
+document.querySelector('#myButton').onclick = operation;

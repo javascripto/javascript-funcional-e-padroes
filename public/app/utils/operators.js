@@ -26,3 +26,7 @@ export function pipe(...fns) {
   return (firstArgument) =>
     fns.reduce((composed, fn) => fn(composed), firstArgument);
 }
+
+export const takeUntil = (times, fn) => {
+  return () => times-- > 0 && fn();
+};
