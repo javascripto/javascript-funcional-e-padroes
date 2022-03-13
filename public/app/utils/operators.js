@@ -1,3 +1,5 @@
+// @ts-check
+
 // // Aplicação parcial
 // const ehDivisivel = (divisor, numero) = !(numero % divisor); // função de 2 argumentos
 // const ehDivisivelPorDois = ehDivisivel.bind(null, 2); // convertendo para função de 1 argumento pois o primeiro já foi passado
@@ -29,4 +31,12 @@ export function pipe(...fns) {
 
 export const takeUntil = (times, fn) => {
   return () => times-- > 0 && fn();
+};
+
+export const debounceTime = (milliseconds, fn) => {
+  let timer;
+  return () => {
+    clearTimeout(timer);
+    timer = setTimeout(fn, milliseconds);
+  };
 };
